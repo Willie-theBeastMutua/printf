@@ -21,7 +21,6 @@ int _printf(const char *format, ...)
 	va_start(args, format);
 
 	for (; *format; format++)
-	{
 		if (*format == '%')
 		{
 			if (*++format == '%')
@@ -50,7 +49,6 @@ int _printf(const char *format, ...)
 		}
 		else
 			char_count += _putchar(*format);
-	}
 	va_end(args);
 	return (char_count);
 }
