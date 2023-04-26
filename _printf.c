@@ -1,54 +1,57 @@
-#include "main.h"
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "holberton.h"
+#include <stddef.h>
+
 /**
- * _printf - print formatted output to stdout
- * @format: format string containing conversion specifiers
+ * _printf - prints formatted output to stdout
+ * @format: format string
  *
- * Return: number of characters printed
+ * Return: number of characters printed, or -1 on failure
  */
+
 int _printf(const char *format, ...)
 {
-	va_list args;
-	char *str;
-	int count = 0;
-
-	if (format == NULL)
+	if (!format)
 		return (-1);
+	int char_count = 0;
+	va_list args;
+
 	va_start(args, format);
-	while (*format != '\0')
+
+	for (; *format; format++)
 	{
 		if (*format == '%')
 		{
-			format++;
-			switch (*format)
+			if (*++format == '%')
+				char_count += _putchar('%');
+			else if (!*format)
 			{
-				case 'c':
-					_putchar(va_arg(args, int));
-					count++;
-					break;
-				case 's':
-					str = va_arg(args, char *);
-					if (str == NULL)
-						str = "(null)";
-					count += _puts(str);
-					break;
-				case '%':
-					_putchar('%');
-					count++;
-					break;
-				default:
-					_putchar('%');
-					_putchar(*format);
-					count += 2;
-					break;
+				va_end(args);
+				return (-1);
+			}
+			else if (*format == 'c')
+				char_count += _putchar(va_arg(args, int));
+			else if (*format == 's')
+			{
+				char *str_arg = va_arg(args, char *);
+
+				if (!str_arg)
+					str_arg = "(null)";
+				for (; *str_arg; str_arg++)
+					char_count += _putchar(*str_arg);
+			}
+			else
+			{
+				char_count += _putchar('%');
+				char_count += _putchar(*format);
 			}
 		}
 		else
-		{
-			_putchar(*format);
-			count++;
-		}
-		format++;
+			char_count += _putchar(*format);
 	}
 	va_end(args);
-	return (count);
+	return (char_count);
 }
+
