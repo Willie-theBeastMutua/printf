@@ -23,6 +23,7 @@ int print_R(va_list ap)
 	{
 		char in[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 		char out[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+
 		found = strchr(in, *str);
 
 		if (found != NULL)

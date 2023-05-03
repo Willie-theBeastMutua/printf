@@ -19,7 +19,11 @@ int print_p(va_list p);
 int print_S(va_list S);
 int print_r(va_list r);
 int print_R(va_list R);
-
+/**
+ * struct print_func - structure for printing various types
+ * @specifier: type to print
+ * @func: function to print
+ */
 
 typedef struct print_func
 {
